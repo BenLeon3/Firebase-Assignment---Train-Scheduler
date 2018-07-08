@@ -1,0 +1,50 @@
+.container-fluid {
+    background: white;
+    background-image: url("../images/sun-pattern.png");
+    padding-bottom: 100%;
+}
+
+#title-background {
+    margin-top: 15px;
+    padding-top: 15px;
+    height: 300px;
+    width: 100%;
+    border-style: solid;
+    border-width: 0px;
+    border-radius: 5px;
+    background: black;
+    background-image: url("../images/union-station.jpg");
+    background-size: 1140px 350px;
+    background-repeat: no-repeat; 
+}
+h1 {
+    text-align: center;
+    padding-top: 120px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 60px;
+}
+
+#train-schedule-box {
+    /* background-color: black;
+    color: white; */
+    background: white;
+    margin-top: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px; 
+}
+
+#add-a-train-box {
+    background: white;
+    margin-top: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.panel-heading {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+}

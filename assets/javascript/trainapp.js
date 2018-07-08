@@ -16,6 +16,12 @@ firebase.initializeApp(config);
 // Create a variable to reference the database.
 var database = firebase.database();
 
+var d = new Date();
+document.getElementById("current-dateTime").innerHTML = d;
+console.log(d);
+
+
+
 // Capture submit button click.
 $("#add-train").on("click", function(event) {
   event.preventDefault();
@@ -30,19 +36,38 @@ $("#add-train").on("click", function(event) {
   console.log(firstTrainTime);
   console.log(frequency);
 
+  var firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
+  console.log(firstTimeConverted);
+  
+  var currentTime = moment();
+  console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+  var diffTime = moment().diff(moment (firstTimeConverted), "minutes");
+  console.log("DIFFERENCE IN TIME: " + diffTime);
+
+  var tRemainder = diffTime % frequency;
+  console.log("tRemainder: " + tRemainder);
+
+  var minutesAway = frequency - tRemainder;
+  console.log("MINUTES TILL TRAIN: " + minutesAway);
+  
+  var nextArrival = moment().add(minutesAway, "minutes").format("hh:mm");
+  // console.log("ARRIVAL TIME: " + moment(nextArrival).format("hh:mm")); 
+
+
   var createRow = function() {
-    // Get reference to existing tbody element, create a new table row element
+    
     var tBody = $("tbody");
     var tRow = $("<tr>");
   
-    // Methods run on jQuery selectors return the selector they we run on
-    // This is why we can create and save a reference to a td in the same statement we update its text
-    $("<td>").text(trainName);
-    $("<td>").text(destination);
-    $("<td>").text(firstTrainTime);
-    $("<td>").text(frequency);
+    var trainNameTd= $("<td>").text(trainName);
+    var destinationTd = $("<td>").text(destination);
+    var frequencyTd = $("<td>").text(frequency);
+    var nextArrivalTd = $("<td>").text(nextArrival);
+    var minutesAwayTd = $("<td>").text(minutesAway);
+
     // Append the newly created table data to the table row
-    tRow.append(trainName, destination, firstTrainTime, frequency);
+    tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
     // Append the table row to the table body
     tBody.append(tRow);
   };
@@ -50,7 +75,7 @@ $("#add-train").on("click", function(event) {
   createRow();
   
 
-  database.ref().set({
+  database.ref().push({
     trainName: trainName,
     destination: destination,
     firstTrainTime: firstTrainTime,
@@ -58,7 +83,9 @@ $("#add-train").on("click", function(event) {
   });
 
 });
-
+//adds multiple trains to firebase
+// database.ref().push(newTrain);
+//
 database.ref().on("value",function (snapshot){
   console.log(snapshot.val());
   console.log(snapshot.val().trainName);
