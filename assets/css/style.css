@@ -17,17 +17,19 @@
     background-size: 1140px 350px;
     background-repeat: no-repeat; 
 }
+
 h1 {
     text-align: center;
     padding-top: 120px;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     font-size: 60px;
 }
 
 #train-schedule-box {
     /* background-color: black;
     color: white; */
+    font-family: 'Titillium Web', sans-serif;
     background: white;
     margin-top: 10px;
     border-style: solid;
@@ -36,6 +38,7 @@ h1 {
 }
 
 #add-a-train-box {
+    font-family: 'Titillium Web', sans-serif;
     background: white;
     margin-top: 10px;
     border-style: solid;
@@ -45,6 +48,6 @@ h1 {
 }
 
 .panel-heading {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     font-size: 30px;
 }

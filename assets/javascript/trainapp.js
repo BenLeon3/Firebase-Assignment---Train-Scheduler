@@ -1,7 +1,3 @@
-/* global moment firebase */
-// Initialize Firebase
-// Make sure to match the configuration to the script version number in the HTML
-// (Ex. 3.0 != 3.7.0)
 var config = {
   apiKey: "AIzaSyBE0qZeK97Za61nbgLYcZfxsU9giknYdqs",
   authDomain: "train-schedule-hw-fd4c5.firebaseapp.com",
@@ -68,31 +64,58 @@ $("#add-train").on("click", function(event) {
 
     // Append the newly created table data to the table row
     tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
-    // Append the table row to the table body
+    // // Append the table row to the table body
     tBody.append(tRow);
   };
   
   createRow();
   
-
+  //adds multiple trains to firebase
+  // database.ref().push(newTrain);
   database.ref().push({
     trainName: trainName,
     destination: destination,
     firstTrainTime: firstTrainTime,
-    frequency: frequency
+    frequency: frequency,
+    minutesAway: minutesAway,
+    nextArrival: nextArrival
+  });
+
+  database.ref().on("value", function(snapshot) {
+    console.log(snapshot.val());
+    console.log(snapshot.val().trainName);
+    console.log(snapshot.val().destination);
+    console.log(snapshot.val().firstTrainTime);
+    console.log(snapshot.val().frequency);
+    console.log(snapshot.val().minutesAway);
+    console.log(snapshot.val().nextArrival);
+
+    // var createRow = function() {
+
+    //   var tBody = $("tbody");
+    //   var tRow = $("<tr>");
+
+    //   // $("<td>").text(snapshot.val().trainName);
+    //   // $("<td>").text(snapshot.val().destination);
+    //   // $("<td>").text(snapshot.val().frequency);
+    //   // $("<td>").text(snapshot.val().nextArrival);
+    //   // $("<td>").text(snapshot.val().minutesAway);
+
+    //   var trainNameTd= $("<td>").text(snapshot.val().trainName);
+    //   var destinationTd = $("<td>").text(snapshot.val().destination);
+    //   var frequencyTd = $("<td>").text(snapshot.val().frequency);
+    //   var nextArrivalTd = $("<td>").text(snapshot.val().nextArrival);
+    //   var minutesAwayTd = $("<td>").text(snapshot.val().minutesAway);
+
+      // tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
+
+      // tBody.append(tRow);
+    // };
+      // createRow();
+  
+  }, function(errorObject){
+    console.log("Errors handles: " + errorObject.code);
   });
 
 });
-//adds multiple trains to firebase
-// database.ref().push(newTrain);
-//
-database.ref().on("value",function (snapshot){
-  console.log(snapshot.val());
-  console.log(snapshot.val().trainName);
-  console.log(snapshot.val().destination);
-  console.log(snapshot.val().firstTrainTime);
-  console.log(snapshot.val().frequency);
 
-}, function(errorObject){
-  console.log("Errors handles: " + errorObject.code);
-});
