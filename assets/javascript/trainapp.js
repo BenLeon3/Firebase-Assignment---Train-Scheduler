@@ -51,24 +51,24 @@ $("#add-train").on("click", function(event) {
   // console.log("ARRIVAL TIME: " + moment(nextArrival).format("hh:mm")); 
 
 
-  var createRow = function() {
+  // var createRow = function() {
     
-    var tBody = $("tbody");
-    var tRow = $("<tr>");
+  //   var tBody = $("tbody");
+  //   var tRow = $("<tr>");
   
-    var trainNameTd= $("<td>").text(trainName);
-    var destinationTd = $("<td>").text(destination);
-    var frequencyTd = $("<td>").text(frequency);
-    var nextArrivalTd = $("<td>").text(nextArrival);
-    var minutesAwayTd = $("<td>").text(minutesAway);
+  //   var trainNameTd= $("<td>").text(trainName);
+  //   var destinationTd = $("<td>").text(destination);
+  //   var frequencyTd = $("<td>").text(frequency);
+  //   var nextArrivalTd = $("<td>").text(nextArrival);
+  //   var minutesAwayTd = $("<td>").text(minutesAway);
 
-    // Append the newly created table data to the table row
-    tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
-    // // Append the table row to the table body
-    tBody.append(tRow);
-  };
+  //   // Append the newly created table data to the table row
+  //   tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
+  //   // // // Append the table row to the table body
+  //   tBody.append(tRow);
+  // };
   
-  createRow();
+  // createRow();
   
   //adds multiple trains to firebase
   // database.ref().push(newTrain);
@@ -81,41 +81,40 @@ $("#add-train").on("click", function(event) {
     nextArrival: nextArrival
   });
 
-  database.ref().on("value", function(snapshot) {
-    console.log(snapshot.val());
-    console.log(snapshot.val().trainName);
-    console.log(snapshot.val().destination);
-    console.log(snapshot.val().firstTrainTime);
-    console.log(snapshot.val().frequency);
-    console.log(snapshot.val().minutesAway);
-    console.log(snapshot.val().nextArrival);
-
-    // var createRow = function() {
-
-    //   var tBody = $("tbody");
-    //   var tRow = $("<tr>");
-
-    //   // $("<td>").text(snapshot.val().trainName);
-    //   // $("<td>").text(snapshot.val().destination);
-    //   // $("<td>").text(snapshot.val().frequency);
-    //   // $("<td>").text(snapshot.val().nextArrival);
-    //   // $("<td>").text(snapshot.val().minutesAway);
-
-    //   var trainNameTd= $("<td>").text(snapshot.val().trainName);
-    //   var destinationTd = $("<td>").text(snapshot.val().destination);
-    //   var frequencyTd = $("<td>").text(snapshot.val().frequency);
-    //   var nextArrivalTd = $("<td>").text(snapshot.val().nextArrival);
-    //   var minutesAwayTd = $("<td>").text(snapshot.val().minutesAway);
-
-      // tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
-
-      // tBody.append(tRow);
-    // };
-      // createRow();
-  
-  }, function(errorObject){
-    console.log("Errors handles: " + errorObject.code);
-  });
-
 });
 
+database.ref().on("child_added", function(snapshot) {
+  console.log(snapshot.val());
+  console.log(snapshot.val().trainName);
+  console.log(snapshot.val().destination);
+  console.log(snapshot.val().firstTrainTime);
+  console.log(snapshot.val().frequency);
+  console.log(snapshot.val().minutesAway);
+  console.log(snapshot.val().nextArrival);
+
+  var createRow = function() {
+
+    var tBody = $("tbody");
+    var tRow = $("<tr>");
+
+    $("<td>").text(snapshot.val().trainName);
+    $("<td>").text(snapshot.val().destination);
+    $("<td>").text(snapshot.val().frequency);
+    $("<td>").text(snapshot.val().nextArrival);
+    $("<td>").text(snapshot.val().minutesAway);
+
+    var trainNameTd= $("<td>").text(snapshot.val().trainName);
+    var destinationTd = $("<td>").text(snapshot.val().destination);
+    var frequencyTd = $("<td>").text(snapshot.val().frequency);
+    var nextArrivalTd = $("<td>").text(snapshot.val().nextArrival);
+    var minutesAwayTd = $("<td>").text(snapshot.val().minutesAway);
+
+    tRow.append(trainNameTd, destinationTd, frequencyTd, nextArrivalTd, minutesAwayTd,);
+
+    tBody.append(tRow);
+  };
+    createRow();
+
+}, function(errorObject){
+  console.log("Errors handles: " + errorObject.code);
+});
